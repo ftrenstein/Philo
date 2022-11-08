@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = philo.c utils.c
+SRCS = philo.c utils.c life_died.c
 HEADER = include/philo.h
 
 OBJ = $(SRCS:.c=.o)

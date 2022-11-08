@@ -6,7 +6,7 @@
 /*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:39:07 by renstein          #+#    #+#             */
-/*   Updated: 2022/11/07 19:27:10 by renstein         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:32:29 by renstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_putstr_fd(char const *s, int fd)
 		write(fd, s, ft_strlen(s));
 }
 
-int	ft_get_time(int start)
+long	ft_get_time(long start)
 {
 	struct timeval	time;
 
@@ -111,7 +111,7 @@ void	ft_valid(int argc, char **argv, t_data *data)
 {
 	int i = 1;
 
-	if ((argc != 6 && argc != 5) || !argv)
+	if ((argc != 6 && argc != 5))
 	{
 		printf("tut\n");
 		ft_exit();
