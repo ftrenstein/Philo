@@ -6,7 +6,7 @@
 /*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:39:14 by renstein          #+#    #+#             */
-/*   Updated: 2022/11/08 19:16:14 by renstein         ###   ########.fr       */
+/*   Updated: 2022/11/09 20:22:08 by renstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	create_thread(t_data *data)
 		pthread_detach(data->philos[i].thread_id);
 		i++;
 	}
+	if (data->number_eats == data-> number_philo)
+		print(ft_get_time(data->timestart_in_ms), i, ALL_FULL, &data->mutex_print);
 }
 
 int	main(int argc, char** argv)

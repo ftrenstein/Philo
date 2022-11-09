@@ -6,11 +6,30 @@
 /*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:37:56 by renstein          #+#    #+#             */
-/*   Updated: 2022/11/08 20:34:11 by renstein         ###   ########.fr       */
+/*   Updated: 2022/11/09 20:28:25 by renstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
+
+
+void	ft_eat(t_data *data, int my_num)
+{
+	pthread_mutex_lock(data->philos[my_num].left_fork); //zahvat
+	print(ft_get_time(data->timestart_in_ms), my_num, GET_FORK_L, &data->mutex_print);
+	pthread_mutex_lock(data->philos[my_num].right_fork);
+	print(ft_get_time(data->timestart_in_ms),  my_num,GET_FORK_R, &data->mutex_print);
+	data->philos[my_num].time_start_eat = ft_get_time(data->timestart_in_ms);
+	print(data->philos[my_num].time_start_eat, my_num, EAT, &data->mutex_print);
+	data->philos[my_num].count_eat++;
+	// check_count_eat(data);
+	usleep(data->time_to_eat * 1000);
+	pthread_mutex_unlock(data->philos[my_num].left_fork); //free
+	print(ft_get_time(data->timestart_in_ms), my_num, FREE_FORK_L, &data->mutex_print);
+	pthread_mutex_unlock(data->philos[my_num].right_fork);
+	print(ft_get_time(data->timestart_in_ms),  my_num, FREE_FORK_R, &data->mutex_print);
+}
+
 
 void	*ft_life_philo(void	*datochka)
 {
@@ -23,29 +42,23 @@ void	*ft_life_philo(void	*datochka)
 	data->philos[my_num].count_eat = 0;
 	if (my_num % 2 == 0)
 		usleep(1000);
-	while (data->philos[my_num].count_eat < data->num_times_eat || data->num_times_eat == 0)
+	while (data->flag)
 	{
-		pthread_mutex_lock(data->philos[my_num].left_fork); //zahvat
-		print(ft_get_time(data->timestart_in_ms), my_num, GET_FORK_L, &data->mutex_print);
-		pthread_mutex_lock(data->philos[my_num].right_fork);
-		print(ft_get_time(data->timestart_in_ms),  my_num,GET_FORK_R, &data->mutex_print);
-		data->philos[my_num].time_start_eat = ft_get_time(data->timestart_in_ms);
-		print(data->philos[my_num].time_start_eat, my_num, EAT, &data->mutex_print);
-		data->philos[my_num].count_eat++;
-		// check_count_eat(data);
-		usleep(data->time_to_eat * 1000);
-		pthread_mutex_unlock(data->philos[my_num].left_fork); //free
-		print(ft_get_time(data->timestart_in_ms), my_num, FREE_FORK_L, &data->mutex_print);
-		pthread_mutex_unlock(data->philos[my_num].right_fork);
-		print(ft_get_time(data->timestart_in_ms),  my_num, FREE_FORK_R, &data->mutex_print);
+		ft_eat(data, my_num);
+		if (data->philos[my_num].count_eat >= data->num_times_eat)
+			break ;
 		print(ft_get_time(data->timestart_in_ms),  my_num, SLEEP, &data->mutex_print);
 		// data->philos[my_num].time_start_eat = ft_get_time(data->timestart_in_ms);
 		usleep(data->time_to_sleep * 1000);
 		print(ft_get_time(data->timestart_in_ms),  my_num, THINK, &data->mutex_print);
 	}
+	data->number_eats++;
+	if (data->number_eats == data->number_philo)
+		data->flag = 0;
+	print(ft_get_time(data->timestart_in_ms),  my_num, SLEEP, &data->mutex_print);
 }
 
-void	ft_clear(t_data *data)
+void	ft_clear(t_data	*data)
 {
 	free (data->forks);
 	free (data->philos);
@@ -64,7 +77,7 @@ int		ft_died(t_data	*data)
 		if (dif > data->time_to_die)
 		{
 			print(time,  my_num, DIED, &data->mutex_print);
-			ft_clear(&data);
+			ft_clear(data);
 			exit (0);
 		}
 		if (my_num == data->number_philo - 1)

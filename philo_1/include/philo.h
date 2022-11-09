@@ -6,7 +6,7 @@
 /*   By: renstein <renstein@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:48:47 by renstein          #+#    #+#             */
-/*   Updated: 2022/11/08 19:39:26 by renstein         ###   ########.fr       */
+/*   Updated: 2022/11/09 20:27:49 by renstein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DIED "died"
-
+# define FULL "philo full"
+# define ALL_FULL "all philo full"
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -42,7 +43,7 @@ typedef struct s_philo
 
 	int		time_start_eat;
 	int		count_eat; ///
-	int		flag;
+
 
 }t_philo;
 
@@ -54,6 +55,8 @@ typedef struct s_data
 	int time_to_eat;
 	int time_to_sleep;
 	int num_times_eat; ///
+	int number_eats;
+	int		flag;
 
 	pthread_mutex_t* forks;
 
@@ -83,7 +86,9 @@ void	print(int time,int namber, char *output, pthread_mutex_t* mutex);
 long		ft_get_time(long start);
 
 void	*ft_life_philo(void	*datochka);
+void	ft_eat(t_data *data, int my_num);
 int		ft_died(t_data	*data);
+void	ft_clear(t_data *data);
 // void	check_count_eat(t_data	*data);
 
 #endif
