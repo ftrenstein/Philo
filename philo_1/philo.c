@@ -73,7 +73,8 @@ void	create_thread(t_data *data)
 		i++;
 	}
 	if (data->number_eats == data-> number_philo)
-		print(ft_get_time(data->timestart_in_ms), i, ALL_FULL, &data->mutex_print);
+		print(ft_get_time(data->timestart_in_ms), i, \
+				ALL_FULL, &data->mutex_print);
 }
 
 int	main(int argc, char** argv)

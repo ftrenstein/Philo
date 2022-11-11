@@ -14,8 +14,9 @@
 
 int	ft_strlen(char const *buf)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (buf[i])
 		i++;
 	return (i);
@@ -56,7 +57,7 @@ int	ft_atoi(char *str)
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char val;
+	char	val;
 
 	if (n == -2147483648)
 		return (ft_putstr_fd("-2147483648", fd));
@@ -109,8 +110,9 @@ void	ft_exit()
 
 void	ft_valid(int argc, char **argv, t_data *data)
 {
-	int i = 1;
+	int	i;
 
+	i = 1;
 	if ((argc != 6 && argc != 5))
 	{
 		printf("tut\n");
@@ -124,10 +126,10 @@ void	ft_valid(int argc, char **argv, t_data *data)
 	}
 	data->number_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat =  ft_atoi(argv[3]);
-	data->time_to_sleep =  ft_atoi(argv[4]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		data->num_times_eat =  ft_atoi(argv[5]);
+		data->num_times_eat = ft_atoi(argv[5]);
 	else
 		data->num_times_eat = 0;
 }

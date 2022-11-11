@@ -16,9 +16,9 @@
 void	ft_eat(t_data *data, int my_num)
 {
 	pthread_mutex_lock(data->philos[my_num].left_fork); //zahvat
-	print(ft_get_time(data->timestart_in_ms), my_num, GET_FORK_L, &data->mutex_print);
+	print (ft_get_time(data->timestart_in_ms), my_num, GET_FORK_L, &data->mutex_print);
 	pthread_mutex_lock(data->philos[my_num].right_fork);
-	print(ft_get_time(data->timestart_in_ms),  my_num,GET_FORK_R, &data->mutex_print);
+	print (ft_get_time(data->timestart_in_ms),  my_num, GET_FORK_R, &data->mutex_print);
 	data->philos[my_num].time_start_eat = ft_get_time(data->timestart_in_ms);
 	print(data->philos[my_num].time_start_eat, my_num, EAT, &data->mutex_print);
 	data->philos[my_num].count_eat++;
